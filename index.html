@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Спортивный магазин</title>
+<!-- Встроенные стили для более современной верстки -->
+<style>
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    background-color: #fafafa;
+    color: #333;
+  }
+
+  /* Шапка */
+header {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    background-color: #222;
+    color: #fff;
+  }
+
+header img {
+    height: 60px;
+    margin-right: 20px;
+}
+
+header h1 {
+    font-size: 24px;
+    margin: 0;
+}
+
+/* Навигация */
+nav {
+    position: sticky;
+    top: 0;
+    background-color: #fff;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    border-bottom: 2px solid #ccc;
+    z-index: 1000;
+}
+
+nav a {
+    text-decoration: none;
+    color: #222;
+    font-weight: bold;
+    padding: 8px 12px;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+nav a:hover {
+    background-color: #007BFF;
+    color: #fff;
+}
+
+/* Основной контейнер */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Разделы */
+section {
+    margin-bottom: 40px;
+}
+
+h2 {
+    font-size: 22px;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #007BFF;
+    padding-bottom: 5px;
+}
+
+/* Блоки товаров */
+.catalog {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.product {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: box-shadow 0.3s;
+}
+
+.product:hover {
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+}
+
+.product img {
+    max-width: 180px;
+    margin-bottom: 10px;
+}
+
+.product h3 {
+    margin: 10px 0 5px;
+    font-size: 16px;
+}
+
+.product p {
+    font-size: 14px;
+    color: #666;
+    flex-grow: 1;
+    text-align: center;
+}
+
+button {
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    margin-top: 10px;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+/* Формы */
+form {
+    display: flex;
+    flex-direction: column;
+    max-width: 500px;
+    margin-top: 20px;
+}
+
+form input, form textarea {
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+form button {
+    align-self: flex-start;
+    width: 150px;
+}
+
+/* Карта */
+#map {
+    width: 100%;
+    height: 350px;
+    background-color: #eaeaea;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    color: #555;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+}
+
+/* Корзина */
+#cart {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    padding: 15px;
+    max-width: 350px;
+}
+
+#cart h3 {
+    margin-top: 0;
+}
+
+#cart-items {
+    list-style: none;
+    padding: 0;
+    margin: 10px 0;
+}
+
+#cart-items li {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid #eee;
+}
+
+#cart-total {
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+/* Адаптивность */
+@media(max-width: 768px){
+  header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  nav {
+    flex-direction: column;
+    align-items: center;
+  }
+  nav a {
+    width: 100%;
+    text-align: center;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- Шапка -->
+<header style="display:flex;align-items:center;justify-content:space-between;padding:20px;background-color:#1a237e;color:#fff;">
+  <div style="display:flex;align-items:center;">
+    <h1 style="margin-left:0;">tapjump</h1>
+  </div>
+  <div style="display:flex;align-items:center;gap:32px;">
+    <div style="display:flex;flex-direction:column;gap:4px;font-size:15px;text-align:right;">
+      <span style="font-weight:bold;">Способы связи:</span>
+      <span>Телефон: <a href="tel:+79614475102" style="color:#fff;text-decoration:underline;">+7&nbsp;961&nbsp;447-51-02</a></span>
+      <span>E-mail: <a href="mailto:mishininnikita@gmail.com" style="color:#fff;text-decoration:underline;">mishininnikita@gmail.com</a></span>
+    </div>
+    <div style="display:flex;align-items:center;gap:12px;background:#fff1;border-radius:24px;padding:8px 16px;">
+      <img src="https://cdn-icons-png.flaticon.com/512/1144/1144760.png" alt="Гость" style="width:40px;height:40px;border-radius:50%;object-fit:cover;border:2px solid #fff;background:#eee;">
+      <div style="display:flex;flex-direction:column;align-items:flex-start;">
+        <span style="font-weight:bold;">Мишанин Никита</span>
+        <div style="display:flex;gap:8px;">
+          <a href="#" style="color:#fff;text-decoration:underline;font-size:13px;">Редактировать профиль</a>
+          <a href="#" style="color:#fff;text-decoration:underline;font-size:13px;">Выйти</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- Навигационное меню -->
+<nav>
+  <a href="#about">О сайте</a>
+  <a href="futbolki.html">Футболки</a>
+  <a href="krossovki.html">Кроссовки</a>
+  <a href="shorty.html">Шорты</a>
+  <a href="#cart">Корзина</a>
+  <a href="otzyvy.html">Отзывы</a>
+</nav>
+
+<!-- Основной контейнер -->
+<div class="container">
+  <!-- О сайте -->
+  <section id="about">
+    <h2>О сайте</h2>
+    <p>Добро пожаловать в наш спортивный магазин! Мы работаем совсем недавно, но уже очень сильно ценим каждого клиента. Для нас важен каждый заказ, и мы искренне рады каждому вашему обращению. Именно поэтому у нас такие низкие цены — мы хотим, чтобы вы остались довольны покупкой и вернулись к нам снова! Наша команда будет рада сотрудничеству!</p>
+    <div style="margin-top:24px;">
+      <span style="font-weight:bold;font-size:17px;">Мы также есть в:</span>
+      <div style="display:flex;gap:18px;margin-top:10px;">
+        <a href="https://t.me/" target="_blank" style="display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:50%;background:#229ED9;"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" alt="Telegram" style="width:26px;height:26px;"></a>
+        <a href="https://instagram.com/" target="_blank" style="display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:50%;background:radial-gradient(circle at 30% 110%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="Instagram" style="width:26px;height:26px;"></a>
+        <a href="https://twitch.tv/" target="_blank" style="display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:50%;background:#9147FF;"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111668.png" alt="Twitch" style="width:26px;height:26px;"></a>
+      </div>
+    </div>
+    <div style="display:flex;gap:32px;flex-wrap:wrap;margin-top:32px;align-items:flex-start;">
+      <div style="flex:1 1 320px;max-width:420px;background:#fffbe7;border:2px solid #ffe082;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,0.06);padding:28px 24px 20px 24px;position:relative;min-width:280px;">
+        <div style="font-size:20px;font-weight:bold;text-align:center;margin-bottom:10px;">СЕРТИФИКАТ</div>
+        <div style="font-size:15px;text-align:center;margin-bottom:18px;">Настоящий сертификат подтверждает, что<br><b>tapjump</b><br>имеет право на продажу одежды и спортивных товаров<br>на территории РФ.</div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:18px;">
+          <span style="font-size:14px;">Директор: <b>Мишанин Н.В.</b></span>
+          <span style="font-size:14px;">2024 г.</span>
+        </div>
+        <img src="https://cdn-icons-png.flaticon.com/512/1041/1041916.png" alt="Печать" style="position:absolute;right:18px;bottom:18px;width:54px;opacity:0.7;">
+      </div>
+      <div style="flex:1 1 320px;max-width:600px;min-width:280px;">
+        <span style="font-weight:bold;font-size:17px;">Наш адрес:</span>
+        <div style="margin:8px 0 4px 0;">Россия, г. Королев, ул. Стадионная, дом 6</div>
+        <div style="margin-bottom:12px;color:#555;font-size:15px;">4 этаж, по центру</div>
+        <iframe src="https://www.google.com/maps?q=Россия,+г.+Королев,+ул.+Стадионная,+дом+6&output=embed" width="100%" height="320" style="border:0;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,0.08);" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+    </div>
+  </section>
+
+  <!-- Каталог товаров -->
+  <!-- <section id="catalog">
+    <h2>Каталог товаров</h2>
+    <div class="catalog" id="product-list"></div>
+  </section> -->
+
+  <!-- Форма заявки -->
+  <section id="application">
+    <h2>Ваши предложения</h2>
+    <form id="contactForm">
+      <input type="text" placeholder="Ваше имя" required />
+      <input type="tel" placeholder="Телефон" required />
+      <textarea placeholder="Сообщение" rows="4"></textarea>
+      <button type="submit">Отправить</button>
+    </form>
+  </section>
+
+  <!-- Карта -->
+  <!-- section id="location">
+    <h2>Наш офис</h2>
+    <div id="map">Здесь будет карта Google Maps</div>
+  </section -->
+
+  <!-- Корзина -->
+  <!--
+  <section id="shopping-cart">
+    <h2>Корзина</h2>
+    <div id="cart">
+      <h3>Товары в корзине</h3>
+      <ul id="cart-items"></ul>
+      <div id="cart-total">Общая сумма: 0 ₽</div>
+      <button id="pay-btn" style="margin-top:15px;width:100%;background:#28a745;">Оплатить</button>
+    </div>
+    <!-- Модальное окно оплаты -->
+    <div id="modal-overlay" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.4);z-index:2000;align-items:center;justify-content:center;">
+      <div id="modal-form" style="background:#fff;padding:32px 24px 24px 24px;border-radius:8px;max-width:350px;width:90%;margin:auto;position:relative;">
+        <button id="close-modal" style="position:absolute;top:8px;right:8px;background:none;border:none;font-size:20px;cursor:pointer;">×</button>
+        <h3 style="margin-top:0;">Данные для оплаты</h3>
+        <form id="pay-form">
+          <input type="text" id="pay-name" placeholder="Ваше имя" required style="width:100%;margin-bottom:12px;padding:8px;">
+          <input type="tel" id="pay-phone" placeholder="Телефон" required style="width:100%;margin-bottom:12px;padding:8px;">
+          <input type="email" id="pay-email" placeholder="E-mail" required style="width:100%;margin-bottom:12px;padding:8px;">
+          <input type="text" id="pay-card" placeholder="Номер карты" required maxlength="19" style="width:100%;margin-bottom:16px;padding:8px;">
+          <button type="submit" style="width:100%;background:#007BFF;color:#fff;padding:10px 0;border:none;border-radius:4px;font-size:16px;">Оплатить</button>
+        </form>
+      </div>
+    </div>
+  </section>
+  -->
+</div>
+
+<footer style="width:100%;background:#1a237e;color:#fff;text-align:center;padding:18px 0 14px 0;font-size:15px;position:relative;bottom:0;left:0;">
+  © 2024 tapjump | Все права защищены | <a href="mailto:mishininnikita@gmail.com" style="color:#fff;text-decoration:underline;">mishininnikita@gmail.com</a>
+</footer>
+
+<!-- Кнопка "Вверх" -->
+<button id="toTopBtn" title="Наверх" style="display:none;position:fixed;right:32px;bottom:32px;z-index:9999;background:#1a237e;border:none;border-radius:50%;width:48px;height:48px;box-shadow:0 2px 8px rgba(0,0,0,0.15);color:#fff;font-size:28px;cursor:pointer;transition:opacity 0.3s;align-items:center;justify-content:center;">
+  ↑
+</button>
+
+<!-- Скрипты для интерактивности -->
+<script>
+  // Массив товаров для генерации карточек
+  const productsData = {
+    "Футболки": [
+      { id: 1, name: 'Футболка', price: 699.99, image: 'https://images.unsplash.com/photo-1624373607006-348f61ea2d76?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDc1fHx8ZW58MHx8fHx8' },
+      { id: 2, name: 'Футболка', price: 699.99, image: 'https://images.unsplash.com/photo-1603924217873-6bab89f381de?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDk4fHx8ZW58MHx8fHx8' },
+      { id: 3, name: 'Футболка', price: 699.99, image: 'https://images.unsplash.com/photo-1666358777322-a25eda95848f?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDEzMXx8fGVufDB8fHx8fA%3D%3D' },
+      { id: 4, name: 'Футболка', price: 699.99, image: 'https://images.unsplash.com/photo-1627225924765-552d49cf47ad?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDY1fHx8ZW58MHx8fHx8' },
+      { id: 5, name: 'Футболка', price: 699.99, image: 'https://images.unsplash.com/photo-1593726891090-b4c6bc09c819?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDY1fHx8ZW58MHx8fHx8' },
+      { id: 6, name: 'Футболка', price: 699.99, image: 'https://images.unsplash.com/photo-1622445272461-c6580cab8755?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDIyfHx8ZW58MHx8fHx8' },
+      { id: 7, name: 'Футболка', price: 699.99, image: 'https://images.unsplash.com/photo-1622470953794-aa9c70b0fb9d?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDU4fHx8ZW58MHx8fHx8' },
+      { id: 8, name: 'Футболка', price: 699.99, image: 'https://images.unsplash.com/photo-1628737490381-117c818d1ad7?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDU3fHx8ZW58MHx8fHx8' },
+      { id: 9, name: 'Футболка', price: 699.99, image: 'https://images.unsplash.com/photo-1667243038099-b257ab263bfd?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NTF8fCVEMSU4NCVEMSU4MyVEMSU4MiVEMCVCMSVEMCVCRSVEMCVCQiVEMCVCQSVEMCVCMCUyMCVEMCVCNCVEMCVCQiVEMSU4RiUyMCVEMSU4MSVEMCVCRiVEMCVCRSVEMSU4MCVEMSU4MiVEMCVCMHxlbnwwfHwwfHx8MA%3D%3D' }
+    ],
+    "Скакалки": [
+      { id: 11, name: 'Кроссовки', price: 1899.99, image: 'https://images.unsplash.com/photo-1559743345-60e0907c4853?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
+      { id: 12, name: 'Кроссовки', price: 1899.99, image: 'https://images.unsplash.com/photo-1604867896102-8841deb4cb10?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDF8fHxlbnwwfHx8fHw%3D' },
+      { id: 13, name: 'Кроссовки', price: 1899.99, image: 'https://images.unsplash.com/photo-1604867896102-8841deb4cb10?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDF8fHxlbnwwfHx8fHw%3D' },
+      { id: 14, name: 'Кроссовки', price: 1899.99, image: 'https://media.istockphoto.com/id/1354048338/photo/stylish-womens-sneakers-on-a-colored-background-with-a-place-for-text.webp?a=1&s=612x612&w=0&k=20&c=s9bWLUcd4RcPEAs_9oc1Kj3iDb3xBEIcyStBuhUyKaM=' },
+      { id: 15, name: 'Кроссовки', price: 1899.99, image: 'https://media.istockphoto.com/id/1152888831/photo/tennis-shoes-in-studio.webp?a=1&s=612x612&w=0&k=20&c=vYJPD1JXWBlWrBCjC5uvy5iZ4qmfGCmcQ4J9UZvUgE8=' },
+      { id: 16, name: 'Кроссовки', price: 1899.99, image: 'https://media.istockphoto.com/id/1309034466/photo/white-sneakers-with-colored-inserts-on-a-yellow-and-pink-background-minimalism-sports-concept.webp?a=1&s=612x612&w=0&k=20&c=fqe7o2JjE2IuY08PmtYHyGM69BEP0BT-FknSgzRM5Dw=' },
+      { id: 17, name: 'Кроссовки', price: 1899.99, image: 'https://media.istockphoto.com/id/1318099114/ru/фото/кроссовки-на-розово-голубом-пастом-фоне-здоровый-образ-жизни-фитнес-тренировки-вид-сверху.jpg?s=612x612&w=0&k=20&c=pPli5-pAQV4ysSDaSRjtsEmpavTmrluz2w3v9CxGJ2Y=' }
+    ],
+    "Шорты": [
+      { id: 21, name: 'Шорты', price: 999.99, image: 'https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=400&q=80' },
+      { id: 22, name: 'Шорты', price: 999.99, image: 'https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=400&q=80' },
+      { id: 23, name: 'Шорты', price: 999.99, image: 'https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=400&q=80' },
+      { id: 24, name: 'Шорты', price: 999.99, image: 'https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=400&q=80' },
+      { id: 25, name: 'Шорты', price: 999.99, image: 'https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=400&q=80' },
+      { id: 26, name: 'Шорты', price: 999.99, image: 'https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=400&q=80' },
+      { id: 27, name: 'Шорты', price: 999.99, image: 'https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=400&q=80' },
+      { id: 28, name: 'Шорты', price: 999.99, image: 'https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=400&q=80' }
+    ]
+  };
+
+  // Генерируем карточки для каталога
+  const catalogContainer = document.getElementById('product-list');
+  Object.values(productsData).flat().forEach(p => {
+    const div = document.createElement('div');
+    div.className = 'product';
+    div.innerHTML = `
+      <a href="product.html?id=${p.id}" style="text-decoration:none;color:inherit;display:block;width:100%">
+        <img src="${p.image}" alt="${p.name}">
+        <h3>${p.name}</h3>
+        <p>Цена: ${p.price} ₽</p>
+      </a>
+      <button onclick="addToCart('${p.name}', ${p.price}, null, ${p.id}); event.stopPropagation();">Добавить в корзину</button>
+    `;
+    catalogContainer.appendChild(div);
+  });
+
+  function addToCart(name, price, size = null, id = null) {
+    let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+    const key = (id ? id : name) + (size ? ' ' + size : '');
+    const existing = cart.find(item => item.key === key);
+    if (existing) {
+      existing.quantity++;
+    } else {
+      cart.push({ key, name, price, size, id, quantity: 1 });
+    }
+    localStorage.setItem('cart', JSON.stringify(cart));
+    renderCart();
+  }
+
+  function renderCart() {
+    let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+    const cartItemsContainer = document.getElementById('cart-items');
+    cartItemsContainer.innerHTML = '';
+    let total = 0;
+    cart.forEach(item => {
+      total += item.price * item.quantity;
+      const li = document.createElement('li');
+      li.innerHTML = `
+        <span>${item.name}${item.size ? ' (' + item.size + ')' : ''} x ${item.quantity}</span>
+        <span>${item.price * item.quantity} ₽</span>
+        <button onclick="removeFromCart('${item.key}')">Удалить</button>
+      `;
+      cartItemsContainer.appendChild(li);
+    });
+    document.getElementById('cart-total').textContent = 'Общая сумма: ' + total.toFixed(2) + ' ₽';
+  }
+
+  function removeFromCart(key) {
+    let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+    cart = cart.filter(item => item.key !== key);
+    localStorage.setItem('cart', JSON.stringify(cart));
+    renderCart();
+  }
+
+  document.getElementById('pay-btn').addEventListener('click', function(event) {
+    event.preventDefault();
+    document.getElementById('modal-overlay').style.display = 'flex';
+  });
+
+  document.getElementById('close-modal').addEventListener('click', function() {
+    document.getElementById('modal-overlay').style.display = 'none';
+  });
+
+  document.getElementById('pay-form').addEventListener('submit', function(event) {
+    event.preventDefault();
+    // Обработка данных формы
+    document.getElementById('modal-overlay').style.display = 'none';
+  });
+
+  // Кнопка "Вверх"
+  const toTopBtn = document.getElementById('toTopBtn');
+  window.addEventListener('scroll', function() {
+    if (window.scrollY > 200) {
+      toTopBtn.style.display = 'flex';
+      toTopBtn.style.opacity = '1';
+    } else {
+      toTopBtn.style.opacity = '0';
+      setTimeout(()=>{if(window.scrollY<=200)toTopBtn.style.display='none';},300);
+    }
+  });
+  toTopBtn.addEventListener('click', function() {
+    window.scrollTo({top:0, behavior:'smooth'});
+  });
+</script>
+</body>
+</html>

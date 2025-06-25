@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Отзывы</title>
+  <style>
+    body { font-family: 'Arial', sans-serif; background: #fafafa; margin: 0; color: #222; }
+    .container { max-width: 900px; margin: 40px auto; background: #fff; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); padding: 32px; }
+    h2 { font-size: 22px; margin-bottom: 20px; border-bottom: 2px solid #007BFF; padding-bottom: 5px; }
+    .review { background: #f4f8ff; border-left: 4px solid #007BFF; margin-bottom: 24px; padding: 18px 24px; border-radius: 6px; }
+    .review .author { font-weight: bold; margin-bottom: 6px; }
+    .review .product { color: #007BFF; font-size: 15px; margin-bottom: 4px; }
+    nav { background: #fff; padding: 10px 20px; display: flex; justify-content: center; gap: 20px; border-bottom: 2px solid #ccc; }
+    nav a { text-decoration: none; color: #222; font-weight: bold; padding: 8px 12px; border-radius: 4px; transition: background-color 0.3s; }
+    nav a:hover { background-color: #007BFF; color: #fff; }
+  </style>
+</head>
+<body>
+<header style="display:flex;align-items:center;justify-content:space-between;padding:20px;background-color:#1a237e;color:#fff;">
+  <h1 style="margin:0;">tapjump</h1>
+  <div style="display:flex;align-items:center;gap:12px;background:#fff1;border-radius:24px;padding:8px 16px;">
+    <img src="https://cdn-icons-png.flaticon.com/512/1144/1144760.png" alt="Гость" style="width:40px;height:40px;border-radius:50%;object-fit:cover;border:2px solid #fff;background:#eee;">
+    <div style="display:flex;flex-direction:column;align-items:flex-start;">
+      <span style="font-weight:bold;">Мишанин Никита</span>
+      <div style="display:flex;gap:8px;">
+        <a href="#" style="color:#fff;text-decoration:underline;font-size:13px;">Редактировать профиль</a>
+        <a href="#" style="color:#fff;text-decoration:underline;font-size:13px;">Выйти</a>
+      </div>
+    </div>
+  </div>
+</header>
+<nav>
+  <a href="nik.html#about">О сайте</a>
+  <a href="futbolki.html">Футболки</a>
+  <a href="krossovki.html">Кроссовки</a>
+  <a href="shorty.html">Шорты</a>
+  <a href="otzyvy.html">Отзывы</a>
+</nav>
+<div class="container">
+  <h2>Отзывы покупателей</h2>
+  <form id="review-form" style="margin-bottom:32px;display:flex;flex-direction:column;gap:12px;max-width:500px;">
+    <input type="text" id="author" placeholder="Ваше имя" required style="padding:10px;font-size:15px;">
+    <select id="product" required style="padding:10px;font-size:15px;">
+      <option value="">Выберите товар</option>
+      <option value="Кроссовки">Кроссовки</option>
+      <option value="Футболка">Футболка</option>
+      <option value="Шорты">Шорты</option>
+    </select>
+    <textarea id="text" placeholder="Ваш отзыв" rows="4" required style="padding:10px;font-size:15px;"></textarea>
+    <button type="submit" style="background:#007BFF;color:#fff;padding:10px 0;border:none;border-radius:4px;font-size:16px;">Оставить отзыв</button>
+  </form>
+  <div id="reviews-list"></div>
+  <!-- Кнопка "Вверх" -->
+  <button id="toTopBtn" title="Наверх" style="display:none;position:fixed;right:32px;bottom:32px;z-index:9999;background:#1a237e;border:none;border-radius:50%;width:48px;height:48px;box-shadow:0 2px 8px rgba(0,0,0,0.15);color:#fff;font-size:28px;cursor:pointer;transition:opacity 0.3s;align-items:center;justify-content:center;">
+    ↑
+  </button>
+  <script>
+    // Предустановленные отзывы
+    const defaultReviews = [
+      {author: 'Анна Петрова', product: 'Кроссовки', text: 'Очень довольна покупкой! Кроссовки пришли быстро, качество отличное, размер подошёл идеально. Спасибо магазину за быструю доставку и приятные цены!'},
+      {author: 'Сергей Иванов', product: 'Футболка', text: 'Футболка понравилась, материал приятный к телу, цвет как на фото. Заказ оформил за пару минут, всё удобно и понятно. Буду заказывать ещё!'},
+      {author: 'Мария К.', product: 'Шорты', text: 'Шорты отличные для тренировок, не сковывают движения. Заказ пришёл быстро, всё было аккуратно упаковано. Рекомендую этот магазин друзьям!'},
+      {author: 'Дмитрий С.', product: 'Кроссовки', text: 'Порадовала цена и сервис. Кроссовки лёгкие, удобные, отлично подошли для бега. Спасибо за консультацию и помощь с выбором!'}
+    ];
+    function getReviews() {
+      const saved = JSON.parse(localStorage.getItem('reviews') || '[]');
+      return [...defaultReviews, ...saved];
+    }
+    function renderReviews() {
+      const reviews = getReviews();
+      const list = document.getElementById('reviews-list');
+      list.innerHTML = '';
+      reviews.forEach(r => {
+        const div = document.createElement('div');
+        div.className = 'review';
+        div.innerHTML = `<div class="author">${r.author}</div><div class="product">${r.product}</div><div>${r.text}</div>`;
+        list.appendChild(div);
+      });
+    }
+    document.getElementById('review-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const author = document.getElementById('author').value.trim();
+      const product = document.getElementById('product').value;
+      const text = document.getElementById('text').value.trim();
+      if (!author || !product || !text) return;
+      const newReview = {author, product, text};
+      const saved = JSON.parse(localStorage.getItem('reviews') || '[]');
+      saved.push(newReview);
+      localStorage.setItem('reviews', JSON.stringify(saved));
+      document.getElementById('review-form').reset();
+      renderReviews();
+    });
+    renderReviews();
+    // Кнопка "Вверх"
+    const toTopBtn = document.getElementById('toTopBtn');
+    window.addEventListener('scroll', function() {
+      if (window.scrollY > 200) {
+        toTopBtn.style.display = 'flex';
+        toTopBtn.style.opacity = '1';
+      } else {
+        toTopBtn.style.opacity = '0';
+        setTimeout(()=>{if(window.scrollY<=200)toTopBtn.style.display='none';},300);
+      }
+    });
+    toTopBtn.addEventListener('click', function() {
+      window.scrollTo({top:0, behavior:'smooth'});
+    });
+  </script>
+</div>
+
+<footer style="width:100%;background:#1a237e;color:#fff;text-align:center;padding:18px 0 14px 0;font-size:15px;position:relative;bottom:0;left:0;">
+  © 2024 tapjump | Все права защищены | <a href="mailto:mishininnikita@gmail.com" style="color:#fff;text-decoration:underline;">mishininnikita@gmail.com</a>
+</footer>
+</body>
+</html> 
